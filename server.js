@@ -22,7 +22,9 @@ if (!fs.existsSync(DATA_FILE)) {
 // Helper to read bookings
 function readBookings() {
     try {
-        const data = fs.readFileSync(DATA_FILE, 'utf8');
+        const raw = fs.readFileSync(DATA_FILE, 'utf8');
+        const data = raw ? raw.trim() : '';
+        if (!data) return [];
         return JSON.parse(data);
     } catch (error) {
         console.error('Error reading bookings:', error);
@@ -122,6 +124,15 @@ app.delete('/api/bookings/:id', (req, res) => {
     } else {
         res.status(500).json({ error: 'Error al actualizar las reservas en el servidor' });
     }
+});
+
+// Rutas explícitas sin extensión en la URL
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+app.get('/tv', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'tv.html'));
 });
 
 app.listen(PORT, () => {
