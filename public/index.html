@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reservas - Sala de Juntas</title>
+    <!-- Google Fonts: Outfit for titles, Inter for body -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="background-decor">
+        <div class="circle circle-1"></div>
+        <div class="circle circle-2"></div>
+    </div>
+
+    <!-- NOTIFICATION CONTAINER -->
+    <div id="notification-container" class="notification-container"></div>
+
+    <!-- 1. LOGIN CONTAINER -->
+    <div id="login-section" class="auth-container">
+        <div class="auth-card glass">
+            <div class="auth-logo">
+                <i class="fa-solid fa-handshake-simple"></i>
+            </div>
+            <h1>Sala de Juntas</h1>
+            <p class="subtitle">Selecciona tu empresa e ingresa tu nombre para comenzar a reservar.</p>
+            
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="username"><i class="fa-solid fa-user"></i> Nombre Completo</label>
+                    <input type="text" id="username" placeholder="Ej. Santiago Cristancho" required autocomplete="off">
+                </div>
+                
+                <div class="form-group">
+                    <label><i class="fa-solid fa-building"></i> Selecciona tu Empresa</label>
+                    <div class="company-selector-grid">
+                        <button type="button" class="company-btn btn-auropaq" data-company="auropaq">
+                            <span class="color-dot"></span>
+                            <span class="company-name">Auropaq</span>
+                        </button>
+                        <button type="button" class="company-btn btn-aurocredit" data-company="aurocredit">
+                            <span class="color-dot"></span>
+                            <span class="company-name">Aurocredit</span>
+                        </button>
+                        <button type="button" class="company-btn btn-auroseguros" data-company="auroseguros">
+                            <span class="color-dot"></span>
+                            <span class="company-name">Auroseguros</span>
+                        </button>
+                        <button type="button" class="company-btn btn-aurotech" data-company="aurotech">
+                            <span class="color-dot"></span>
+                            <span class="company-name">Aurotech</span>
+                        </button>
+                        <button type="button" class="company-btn btn-axertic" data-company="axertic">
+                            <span class="color-dot"></span>
+                            <span class="company-name">Axertic</span>
+                        </button>
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-btn" id="btn-login-submit" disabled>
+                    Ingresar al Portal <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 2. DASHBOARD CONTAINER (Initially Hidden) -->
+    <div id="dashboard-section" class="dashboard-container hidden">
+        <!-- HEADER -->
+        <header class="glass">
+            <div class="header-logo">
+                <i class="fa-solid fa-calendar-check"></i>
+                <span>Sala de Juntas</span>
+            </div>
+            <div class="user-profile">
+                <span id="user-badge" class="badge"></span>
+                <span class="user-welcome">Hola, <strong id="display-username">Usuario</strong></span>
+                <button id="logout-btn" class="logout-btn" title="Cerrar Sesión">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- MAIN LAYOUT -->
+        <main class="dashboard-grid">
+            <!-- COLUMN 1: CALENDAR & BOOKINGS LIST -->
+            <section class="left-column glass">
+                <div class="section-header">
+                    <h2><i class="fa-solid fa-calendar-days"></i> Calendario de Disponibilidad</h2>
+                    <div class="calendar-nav">
+                        <button id="prev-month" class="nav-btn"><i class="fa-solid fa-chevron-left"></i></button>
+                        <span id="calendar-month-year" class="month-title">Junio 2026</span>
+                        <button id="next-month" class="nav-btn"><i class="fa-solid fa-chevron-right"></i></button>
+                    </div>
+                </div>
+
+                <!-- CALENDAR GRID -->
+                <div class="calendar-widget">
+                    <div class="weekdays-header">
+                        <div>Dom</div>
+                        <div>Lun</div>
+                        <div>Mar</div>
+                        <div>Mié</div>
+                        <div>Jue</div>
+                        <div>Vie</div>
+                        <div>Sáb</div>
+                    </div>
+                    <div id="calendar-days" class="calendar-days-grid">
+                        <!-- Javascript will render days here -->
+                    </div>
+                </div>
+
+                <!-- SELECTED DATE INFORMATION AND TIMELINE -->
+                <div class="selected-date-header">
+                    <h3>Reuniones para el <span id="selected-date-str">30 de Junio, 2026</span></h3>
+                </div>
+                
+                <div id="day-timeline" class="timeline-container">
+                    <!-- Javascript will render reservations for the day here -->
+                </div>
+            </section>
+
+            <!-- COLUMN 2: BOOKING FORM -->
+            <section class="right-column glass">
+                <div class="section-header">
+                    <h2><i class="fa-solid fa-circle-plus"></i> Reservar Sala de Juntas</h2>
+                </div>
+                
+                <form id="booking-form" class="booking-form">
+                    <div class="form-group">
+                        <label for="booking-date">Fecha de la Reunión</label>
+                        <div class="input-icon-wrapper">
+                            <i class="fa-regular fa-calendar input-icon"></i>
+                            <input type="date" id="booking-date" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="booking-title">Asunto de la Reunión</label>
+                        <div class="input-icon-wrapper">
+                            <i class="fa-solid fa-quote-left input-icon"></i>
+                            <input type="text" id="booking-title" placeholder="Ej. Reunión Mensual de Ventas" required autocomplete="off">
+                        </div>
+                    </div>
+
+                    <div class="time-inputs-row">
+                        <div class="form-group">
+                            <label for="booking-start">Hora Inicio</label>
+                            <div class="input-icon-wrapper">
+                                <i class="fa-regular fa-clock input-icon"></i>
+                                <input type="time" id="booking-start" step="900" required> <!-- 15 min steps -->
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="booking-end">Hora Fin</label>
+                            <div class="input-icon-wrapper">
+                                <i class="fa-regular fa-clock input-icon"></i>
+                                <input type="time" id="booking-end" step="900" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="booking-summary-box">
+                        <div class="summary-item">
+                            <span class="label">Empresa:</span>
+                            <span id="summary-company" class="value">-</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="label">Organiza:</span>
+                            <span id="summary-organizer" class="value">-</span>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="submit-btn reserve-btn" id="btn-reserve-submit">
+                        <i class="fa-solid fa-check"></i> Confirmar Reserva
+                    </button>
+                </form>
+
+                <!-- GENERAL FUTURE LIST -->
+                <div class="upcoming-meetings-section">
+                    <h3><i class="fa-solid fa-list-ul"></i> Próximas Reservas</h3>
+                    <div id="upcoming-meetings-list" class="upcoming-list">
+                        <!-- Rendered by js -->
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/booking.js"></script>
+</body>
+</html>

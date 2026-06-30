@@ -1,0 +1,1002 @@
+/* ==========================================================================
+   DESIGN SYSTEM & VARIABLES
+   ========================================================================== */
+:root {
+    /* Base Colors */
+    --bg-dark: #0f172a;
+    --bg-darker: #020617;
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+    --border-glass: rgba(255, 255, 255, 0.08);
+    --bg-glass: rgba(15, 23, 42, 0.55);
+    --bg-glass-input: rgba(15, 23, 42, 0.8);
+    --shadow-main: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    --radius-lg: 16px;
+    --radius-md: 10px;
+    --radius-sm: 6px;
+    
+    /* Company Colors */
+    --color-auropaq: #a855f7;        /* Purple */
+    --color-auropaq-glow: rgba(168, 85, 247, 0.4);
+    --color-auropaq-bg: rgba(168, 85, 247, 0.12);
+    
+    --color-axertic: #eab308;        /* Yellow */
+    --color-axertic-glow: rgba(234, 179, 8, 0.4);
+    --color-axertic-bg: rgba(234, 179, 8, 0.12);
+    
+    --color-aurocredit: #22c55e;     /* Green */
+    --color-aurocredit-glow: rgba(34, 197, 94, 0.4);
+    --color-aurocredit-bg: rgba(34, 197, 94, 0.12);
+    
+    --color-auroseguros: #ec4899;    /* Pink */
+    --color-auroseguros-glow: rgba(236, 72, 153, 0.4);
+    --color-auroseguros-bg: rgba(236, 72, 153, 0.12);
+    
+    --color-aurotech: #ef4444;       /* Red */
+    --color-aurotech-glow: rgba(239, 68, 68, 0.4);
+    --color-aurotech-bg: rgba(239, 68, 68, 0.12);
+
+    /* Selected Company Variable (Will be overriden via JS or dynamic classes) */
+    --brand-color: #3b82f6;
+    --brand-glow: rgba(59, 130, 246, 0.4);
+    --brand-bg: rgba(59, 130, 246, 0.12);
+}
+
+/* Company theme modifiers */
+.theme-auropaq {
+    --brand-color: var(--color-auropaq);
+    --brand-glow: var(--color-auropaq-glow);
+    --brand-bg: var(--color-auropaq-bg);
+}
+.theme-axertic {
+    --brand-color: var(--color-axertic);
+    --brand-glow: var(--color-axertic-glow);
+    --brand-bg: var(--color-axertic-bg);
+}
+.theme-aurocredit {
+    --brand-color: var(--color-aurocredit);
+    --brand-glow: var(--color-aurocredit-glow);
+    --brand-bg: var(--color-aurocredit-bg);
+}
+.theme-auroseguros {
+    --brand-color: var(--color-auroseguros);
+    --brand-glow: var(--color-auroseguros-glow);
+    --brand-bg: var(--color-auroseguros-bg);
+}
+.theme-aurotech {
+    --brand-color: var(--color-aurotech);
+    --brand-glow: var(--color-aurotech-glow);
+    --brand-bg: var(--color-aurotech-bg);
+}
+
+/* ==========================================================================
+   RESET & GLOBAL STYLES
+   ========================================================================== */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-darker);
+    color: var(--text-main);
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+    padding-bottom: 2rem;
+}
+
+h1, h2, h3, .month-title, .company-name {
+    font-family: 'Outfit', sans-serif;
+    letter-spacing: -0.02em;
+}
+
+/* ==========================================================================
+   DECORATIVE BACKGROUND
+   ========================================================================== */
+.background-decor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.circle {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(100px);
+    opacity: 0.15;
+    animation: float 20s infinite alternate ease-in-out;
+}
+
+.circle-1 {
+    width: 50vw;
+    height: 50vw;
+    background: radial-gradient(circle, #3b82f6 0%, #8b5cf6 100%);
+    top: -20%;
+    left: -10%;
+}
+
+.circle-2 {
+    width: 45vw;
+    height: 45vw;
+    background: radial-gradient(circle, #ec4899 0%, #ef4444 100%);
+    bottom: -15%;
+    right: -10%;
+    animation-delay: -5s;
+}
+
+@keyframes float {
+    0% {
+        transform: translate(0, 0) scale(1) rotate(0deg);
+    }
+    100% {
+        transform: translate(8%, 10%) scale(1.1) rotate(360deg);
+    }
+}
+
+/* ==========================================================================
+   GLASSMORPHISM COMPONENT
+   ========================================================================== */
+.glass {
+    background: var(--bg-glass);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--border-glass);
+    box-shadow: var(--shadow-main);
+    border-radius: var(--radius-lg);
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* ==========================================================================
+   NOTIFICATIONS
+   ========================================================================== */
+.notification-container {
+    position: fixed;
+    top: 24px;
+    right: 24px;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-width: 380px;
+    width: calc(100% - 48px);
+}
+
+.notification {
+    padding: 16px 20px;
+    border-radius: var(--radius-md);
+    background: rgba(15, 23, 42, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-main);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transform: translateY(-20px);
+    opacity: 0;
+    animation: slideIn 0.3s forwards cubic-bezier(0.16, 1, 0.3, 1);
+    transition: all 0.3s ease;
+}
+
+.notification.success {
+    border-left: 4px solid var(--color-aurocredit);
+}
+
+.notification.error {
+    border-left: 4px solid var(--color-aurotech);
+}
+
+.notification i {
+    font-size: 1.25rem;
+}
+
+.notification.success i { color: var(--color-aurocredit); }
+.notification.error i { color: var(--color-aurotech); }
+
+@keyframes slideIn {
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* ==========================================================================
+   LOGIN CARD / AUTH SECTION
+   ========================================================================== */
+.auth-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 24px;
+}
+
+.auth-card {
+    max-width: 480px;
+    width: 100%;
+    padding: 40px;
+    text-align: center;
+}
+
+.auth-logo {
+    width: 72px;
+    height: 72px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.03) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto 24px;
+}
+
+.auth-logo i {
+    font-size: 2rem;
+    color: #3b82f6;
+    background: linear-gradient(to right, #3b82f6, #8b5cf6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.auth-card h1 {
+    font-size: 2.25rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    background: linear-gradient(to right, #ffffff, #94a3b8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.subtitle {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin-bottom: 32px;
+}
+
+.form-group {
+    margin-bottom: 24px;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 600;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+}
+
+.form-group label i {
+    margin-right: 4px;
+}
+
+input[type="text"],
+input[type="date"],
+input[type="time"] {
+    width: 100%;
+    background: var(--bg-glass-input);
+    border: 1px solid var(--border-glass);
+    padding: 14px 16px;
+    border-radius: var(--radius-md);
+    color: var(--text-main);
+    font-family: inherit;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    outline: none;
+}
+
+input:focus {
+    border-color: var(--brand-color, #3b82f6);
+    box-shadow: 0 0 0 3px var(--brand-glow, rgba(59, 130, 246, 0.25));
+}
+
+/* Company Buttons */
+.company-selector-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-top: 8px;
+}
+
+.company-btn {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border-glass);
+    padding: 16px 12px;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+}
+
+.company-btn:hover {
+    background: rgba(255, 255, 255, 0.07);
+    border-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+.company-btn .color-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: block;
+}
+
+.company-btn .company-name {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--text-main);
+}
+
+/* Brand specific active layouts in Login */
+.btn-auropaq .color-dot { background-color: var(--color-auropaq); }
+.btn-aurocredit .color-dot { background-color: var(--color-aurocredit); }
+.btn-auroseguros .color-dot { background-color: var(--color-auroseguros); }
+.btn-aurotech .color-dot { background-color: var(--color-aurotech); }
+.btn-axertic .color-dot { background-color: var(--color-axertic); }
+
+.company-btn.selected {
+    transform: scale(1.03);
+}
+
+.company-btn[data-company="auropaq"].selected {
+    border-color: var(--color-auropaq);
+    background: var(--color-auropaq-bg);
+    box-shadow: 0 0 15px var(--color-auropaq-glow);
+}
+.company-btn[data-company="aurocredit"].selected {
+    border-color: var(--color-aurocredit);
+    background: var(--color-aurocredit-bg);
+    box-shadow: 0 0 15px var(--color-aurocredit-glow);
+}
+.company-btn[data-company="auroseguros"].selected {
+    border-color: var(--color-auroseguros);
+    background: var(--color-auroseguros-bg);
+    box-shadow: 0 0 15px var(--color-auroseguros-glow);
+}
+.company-btn[data-company="aurotech"].selected {
+    border-color: var(--color-aurotech);
+    background: var(--color-aurotech-bg);
+    box-shadow: 0 0 15px var(--color-aurotech-glow);
+}
+.company-btn[data-company="axertic"].selected {
+    border-color: var(--color-axertic);
+    background: var(--color-axertic-bg);
+    box-shadow: 0 0 15px var(--color-axertic-glow);
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 14px;
+    border-radius: var(--radius-md);
+    border: none;
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    color: white;
+    margin-top: 16px;
+    transition: all 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
+.submit-btn:not(:disabled):hover {
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
+    transform: translateY(-1px);
+}
+
+.submit-btn:disabled {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-muted);
+    cursor: not-allowed;
+}
+
+/* ==========================================================================
+   DASHBOARD CONTAINER & HEADER
+   ========================================================================== */
+.dashboard-container {
+    max-width: 1200px;
+    margin: 24px auto 0;
+    padding: 0 16px;
+}
+
+header {
+    padding: 16px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.header-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 600;
+    background: linear-gradient(to right, #ffffff, #cbd5e1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.header-logo i {
+    color: var(--brand-color);
+    -webkit-text-fill-color: initial;
+}
+
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.user-welcome {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+}
+
+.user-welcome strong {
+    color: var(--text-main);
+}
+
+.badge {
+    padding: 6px 12px;
+    border-radius: var(--radius-sm);
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    background-color: var(--brand-bg);
+    border: 1px solid var(--brand-color);
+    color: var(--brand-color);
+    box-shadow: 0 0 10px var(--brand-glow);
+}
+
+.logout-btn {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-glass);
+    color: var(--text-muted);
+    width: 38px;
+    height: 38px;
+    border-radius: var(--radius-sm);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.logout-btn:hover {
+    background: rgba(239, 68, 68, 0.15);
+    border-color: rgba(239, 68, 68, 0.3);
+    color: #ef4444;
+}
+
+/* ==========================================================================
+   DASHBOARD GRID LAYOUT
+   ========================================================================== */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr;
+    gap: 24px;
+}
+
+.left-column, .right-column {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--border-glass);
+    padding-bottom: 12px;
+}
+
+.section-header h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.section-header h2 i {
+    color: var(--brand-color);
+}
+
+/* ==========================================================================
+   CALENDAR WIDGET
+   ========================================================================== */
+.calendar-nav {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.nav-btn {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-glass);
+    color: var(--text-main);
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-sm);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.nav-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.month-title {
+    font-size: 1rem;
+    font-weight: 600;
+    min-width: 110px;
+    text-align: center;
+}
+
+.calendar-widget {
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--border-glass);
+    border-radius: var(--radius-md);
+    padding: 16px;
+    margin-bottom: 24px;
+}
+
+.weekdays-header {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    text-align: center;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+.calendar-days-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+}
+
+.calendar-day {
+    aspect-ratio: 1.2;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.02);
+    border-radius: var(--radius-sm);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 6px;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.2s ease;
+}
+
+.calendar-day:hover:not(.empty) {
+    background: rgba(255, 255, 255, 0.07);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.calendar-day.empty {
+    background: transparent;
+    border: none;
+    cursor: default;
+}
+
+.calendar-day .day-num {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-main);
+}
+
+.calendar-day.other-month .day-num {
+    color: var(--text-muted);
+    opacity: 0.4;
+}
+
+.calendar-day.today {
+    border-color: rgba(255, 255, 255, 0.25);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.calendar-day.today .day-num {
+    color: var(--brand-color);
+    font-weight: 700;
+}
+
+.calendar-day.selected-day {
+    background: var(--brand-bg) !important;
+    border-color: var(--brand-color) !important;
+}
+
+.calendar-day.selected-day .day-num {
+    color: var(--brand-color);
+    font-weight: 700;
+}
+
+/* Dots inside calendar cell representing bookings */
+.day-indicators {
+    display: flex;
+    gap: 3px;
+    justify-content: center;
+    margin-top: auto;
+    flex-wrap: wrap;
+    min-height: 6px;
+}
+
+.indicator-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    display: block;
+}
+
+.indicator-dot.auropaq { background-color: var(--color-auropaq); }
+.indicator-dot.aurocredit { background-color: var(--color-aurocredit); }
+.indicator-dot.auroseguros { background-color: var(--color-auroseguros); }
+.indicator-dot.aurotech { background-color: var(--color-aurotech); }
+.indicator-dot.axertic { background-color: var(--color-axertic); }
+
+/* ==========================================================================
+   TIMELINE SCHEDULER VIEW (DAILY VIEW)
+   ========================================================================== */
+.selected-date-header {
+    margin-bottom: 16px;
+}
+
+.selected-date-header h3 {
+    font-size: 1.05rem;
+    font-weight: 500;
+    color: var(--text-main);
+}
+
+.selected-date-header h3 span {
+    color: var(--brand-color);
+}
+
+.timeline-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-height: 300px;
+    overflow-y: auto;
+    padding-right: 8px;
+}
+
+/* Custom Scrollbar for container */
+.timeline-container::-webkit-scrollbar,
+.upcoming-list::-webkit-scrollbar {
+    width: 6px;
+}
+.timeline-container::-webkit-scrollbar-track,
+.upcoming-list::-webkit-scrollbar-track {
+    background: transparent;
+}
+.timeline-container::-webkit-scrollbar-thumb,
+.upcoming-list::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+}
+.timeline-container::-webkit-scrollbar-thumb:hover,
+.upcoming-list::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.timeline-empty {
+    text-align: center;
+    padding: 30px;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    border: 1px dashed rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius-md);
+    background: rgba(255, 255, 255, 0.01);
+}
+
+.timeline-card {
+    display: flex;
+    align-items: stretch;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    transition: all 0.2s ease;
+}
+
+.timeline-card:hover {
+    border-color: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.timeline-card .company-stripe {
+    width: 6px;
+    flex-shrink: 0;
+}
+
+.timeline-card.auropaq .company-stripe { background-color: var(--color-auropaq); }
+.timeline-card.aurocredit .company-stripe { background-color: var(--color-aurocredit); }
+.timeline-card.auroseguros .company-stripe { background-color: var(--color-auroseguros); }
+.timeline-card.aurotech .company-stripe { background-color: var(--color-aurotech); }
+.timeline-card.axertic .company-stripe { background-color: var(--color-axertic); }
+
+.timeline-card-content {
+    padding: 14px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-grow: 1;
+    gap: 16px;
+}
+
+.meeting-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.meeting-time {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.meeting-title {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--text-main);
+}
+
+.meeting-meta {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.meeting-meta .org-name {
+    color: var(--text-main);
+    font-weight: 500;
+}
+
+.meeting-meta .company-tag {
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.7rem;
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+.timeline-card.auropaq .company-tag { color: var(--color-auropaq); background: var(--color-auropaq-bg); }
+.timeline-card.aurocredit .company-tag { color: var(--color-aurocredit); background: var(--color-aurocredit-bg); }
+.timeline-card.auroseguros .company-tag { color: var(--color-auroseguros); background: var(--color-auroseguros-bg); }
+.timeline-card.aurotech .company-tag { color: var(--color-aurotech); background: var(--color-aurotech-bg); }
+.timeline-card.axertic .company-tag { color: var(--color-axertic); background: var(--color-axertic-bg); }
+
+.delete-booking-btn {
+    background: transparent;
+    border: 1px solid rgba(239, 68, 68, 0.2);
+    color: #ef4444;
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-sm);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.delete-booking-btn:hover {
+    background: #ef4444;
+    color: white;
+    border-color: #ef4444;
+}
+
+/* ==========================================================================
+   BOOKING FORM
+   ========================================================================== */
+.booking-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.input-icon-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-icon {
+    position: absolute;
+    left: 14px;
+    color: var(--text-muted);
+    font-size: 1rem;
+    pointer-events: none;
+}
+
+.input-icon-wrapper input {
+    padding-left: 42px;
+}
+
+.time-inputs-row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+}
+
+.booking-summary-box {
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--border-glass);
+    border-radius: var(--radius-md);
+    padding: 16px;
+    margin-bottom: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.summary-item {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+}
+
+.summary-item .label {
+    color: var(--text-muted);
+}
+
+.summary-item .value {
+    font-weight: 600;
+    color: var(--text-main);
+}
+
+#summary-company {
+    color: var(--brand-color);
+}
+
+.reserve-btn {
+    background: linear-gradient(135deg, var(--brand-color) 0%, rgba(0,0,0,0.2) 150%);
+    box-shadow: 0 4px 14px var(--brand-glow);
+}
+
+.reserve-btn:hover {
+    box-shadow: 0 6px 20px var(--brand-glow) !important;
+}
+
+/* ==========================================================================
+   UPCOMING MEETINGS LIST (RIGHT SIDE)
+   ========================================================================== */
+.upcoming-meetings-section {
+    margin-top: 32px;
+    border-top: 1px solid var(--border-glass);
+    padding-top: 24px;
+}
+
+.upcoming-meetings-section h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.upcoming-meetings-section h3 i {
+    color: var(--brand-color);
+}
+
+.upcoming-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-height: 220px;
+    overflow-y: auto;
+    padding-right: 4px;
+}
+
+.upcoming-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.01);
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    border-radius: var(--radius-md);
+    padding: 12px 14px;
+    font-size: 0.85rem;
+}
+
+.upcoming-item .meeting-name-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.upcoming-item .company-indicator-bar {
+    width: 4px;
+    height: 24px;
+    border-radius: 2px;
+}
+
+.upcoming-item.auropaq .company-indicator-bar { background-color: var(--color-auropaq); }
+.upcoming-item.aurocredit .company-indicator-bar { background-color: var(--color-aurocredit); }
+.upcoming-item.auroseguros .company-indicator-bar { background-color: var(--color-auroseguros); }
+.upcoming-item.aurotech .company-indicator-bar { background-color: var(--color-aurotech); }
+.upcoming-item.axertic .company-indicator-bar { background-color: var(--color-axertic); }
+
+.upcoming-item .meeting-details {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.upcoming-item .meeting-title-text {
+    font-weight: 600;
+    color: var(--text-main);
+}
+
+.upcoming-item .meeting-time-text {
+    color: var(--text-muted);
+    font-size: 0.75rem;
+}
+
+.upcoming-item .meeting-date-badge {
+    background: rgba(255, 255, 255, 0.04);
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-weight: 500;
+    color: var(--text-muted);
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN
+   ========================================================================== */
+@media (max-width: 900px) {
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .auth-card {
+        padding: 24px;
+    }
+}
+
+@media (max-width: 480px) {
+    .company-selector-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .time-inputs-row {
+        grid-template-columns: 1fr;
+    }
+}

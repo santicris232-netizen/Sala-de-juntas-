@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pantalla Sala de Juntas</title>
+    <!-- Google Fonts: Outfit and Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;500;600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <!-- FontAwesome icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/tv.css">
+</head>
+<body>
+    <!-- Animated Subtle Background Gradient for TVs -->
+    <div class="tv-background">
+        <div class="glow-orb orb-1"></div>
+        <div class="glow-orb orb-2"></div>
+    </div>
+
+    <!-- MAIN FULLSCREEN GRID -->
+    <div class="tv-container">
+        
+        <!-- HEADER -->
+        <header class="tv-header glass">
+            <div class="tv-logo-area">
+                <i class="fa-solid fa-display logo-icon"></i>
+                <div class="logo-text">
+                    <h1>SALA DE JUNTAS</h1>
+                    <span class="sub">Disponibilidad en tiempo real</span>
+                </div>
+            </div>
+            
+            <div class="tv-clock-area">
+                <div id="tv-clock" class="digital-clock">08:30:00</div>
+                <div id="tv-date" class="digital-date">Martes, 30 de Junio de 2026</div>
+            </div>
+        </header>
+
+        <!-- DASHBOARD GRID -->
+        <main class="tv-grid">
+            
+            <!-- LEFT COLUMN: STATUS CARD & UPCOMING EVENTS -->
+            <section class="tv-status-section">
+                <!-- ROOM STATE CARD -->
+                <div id="room-status-card" class="status-card glass state-available">
+                    <div class="status-badge">
+                        <span class="status-dot"></span>
+                        <span id="status-label">DISPONIBLE</span>
+                    </div>
+                    
+                    <div id="active-meeting-details" class="active-meeting-details">
+                        <h2 id="active-meeting-title">Libre para reuniones rápidas</h2>
+                        <div class="meeting-meta-row">
+                            <span id="active-meeting-company" class="company-tag">SALA LIBRE</span>
+                            <span id="active-meeting-organizer" class="organizer-name"><i class="fa-regular fa-user"></i> Sin organizador</span>
+                        </div>
+                    </div>
+
+                    <div class="countdown-wrapper">
+                        <span id="countdown-title" class="countdown-title">SIGUIENTE REUNIÓN EN</span>
+                        <div id="countdown-timer" class="countdown-value">--:--:--</div>
+                    </div>
+                </div>
+
+                <!-- TODAY'S SCHEDULE FEED -->
+                <div class="upcoming-feed-card glass">
+                    <h2><i class="fa-solid fa-list-check"></i> Cronograma de Hoy</h2>
+                    <div id="today-feed-list" class="feed-list">
+                        <!-- Javascript will inject list -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- RIGHT COLUMN: TEAMS STYLE HOURLY CALENDAR VIEW -->
+            <section class="tv-calendar-section glass">
+                <div class="calendar-header">
+                    <h2><i class="fa-regular fa-calendar-days"></i> Horario Diario</h2>
+                    <span class="today-tag">HOY</span>
+                </div>
+
+                <div class="scheduler-container">
+                    <div class="time-axis">
+                        <!-- Hour markers from 07:00 to 20:00 -->
+                        <div class="time-label">07:00</div>
+                        <div class="time-label">08:00</div>
+                        <div class="time-label">09:00</div>
+                        <div class="time-label">10:00</div>
+                        <div class="time-label">11:00</div>
+                        <div class="time-label">12:00</div>
+                        <div class="time-label">13:00</div>
+                        <div class="time-label">14:00</div>
+                        <div class="time-label">15:00</div>
+                        <div class="time-label">16:00</div>
+                        <div class="time-label">17:00</div>
+                        <div class="time-label">18:00</div>
+                        <div class="time-label">19:00</div>
+                        <div class="time-label">20:00</div>
+                    </div>
+                    
+                    <div class="schedule-grid">
+                        <!-- Grid lines -->
+                        <div class="grid-line"></div>
+                        <div class="grid-line"></div>
+                        <div class="grid-line"></div>
+                        <div class="grid-line"></div>
+                        <div class="grid-line"></div>
+                        <div class="grid-line"></div>
+                        <div class="grid-line"></div>
+                        <div class="grid-line"></div>
+                        <div class="grid-line"></div>
+                        <div class="grid-line"></div>
+                        <div class="grid-line"></div>
+                        <div class="grid-line"></div>
+                        <div class="grid-line"></div>
+                        <div class="grid-line"></div>
+
+                        <!-- Current Time Indicator Line (red horizontal line moving dynamically) -->
+                        <div id="current-time-bar" class="current-time-bar">
+                            <span class="time-dot"></span>
+                        </div>
+
+                        <!-- Booked Blocks Container (placed on top of the grid lines) -->
+                        <div id="bookings-blocks-area" class="bookings-blocks-area">
+                            <!-- JS will dynamically position boxes here -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+        
+        <!-- FOOTER / SCROLLING TAPE -->
+        <footer class="tv-footer glass">
+            <div class="ticker-wrapper">
+                <div class="ticker-title">INFORMACIÓN:</div>
+                <div class="ticker-content">
+                    <span class="ticker-item"><i class="fa-solid fa-circle-info"></i> Escanea el código QR de la puerta para reservar la sala.</span>
+                    <span class="ticker-item"><i class="fa-solid fa-building"></i> Empresas admitidas: Auropaq, Aurocredit, Auroseguros, Aurotech y Axertic.</span>
+                    <span class="ticker-item"><i class="fa-solid fa-leaf"></i> Por favor, apaga la pantalla y limpia la sala al finalizar tu reunión.</span>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/tv.js"></script>
+</body>
+</html>
