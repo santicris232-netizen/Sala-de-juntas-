@@ -1,0 +1,13 @@
+name = "juntas"
+main = "index.js"
+compatibility_date = "2024-04-03"
+
+[assets]
+directory = "./public"
+binding = "ASSETS"
+
+[[kv_namespaces]]
+binding = "BOOKINGS_KV"
+# Reemplazar con el ID devuelto al crear el namespace con:
+# npx wrangler kv namespace create BOOKINGS_KV
+id = "CAMBIAR_POR_TU_KV_NAMESPACE_ID"
