@@ -100,7 +100,7 @@
                     </div>
                     
                     <div class="schedule-grid">
-                        <!-- Grid lines -->
+                        <!-- Grid lines (13 intervals for 13 hours from 07:00 to 20:00) -->
                         <div class="grid-line"></div>
                         <div class="grid-line"></div>
                         <div class="grid-line"></div>
@@ -112,9 +112,8 @@
                         <div class="grid-line"></div>
                         <div class="grid-line"></div>
                         <div class="grid-line"></div>
-                        <div class="grid-line"></div>
-                        <div class="grid-line"></div>
-                        <div class="grid-line"></div>
+                        <div class="grid-line unavailable-slot"></div>
+                        <div class="grid-line unavailable-slot"></div>
 
                         <!-- Current Time Indicator Line (red horizontal line moving dynamically) -->
                         <div id="current-time-bar" class="current-time-bar">
@@ -135,9 +134,16 @@
         <footer class="tv-footer glass">
             <div class="ticker-wrapper">
                 <div class="ticker-content">
-                    <span class="ticker-item"><i class="fa-solid fa-circle-info"></i> Escanea el código QR de la puerta para reservar la sala.</span>
-                    <span class="ticker-item"><i class="fa-solid fa-building"></i> Empresas admitidas: Auropaq, Aurocredit, Auroseguros, Aurotech y Axertic.</span>
-                    <span class="ticker-item"><i class="fa-solid fa-leaf"></i> Por favor, apaga la pantalla y limpia la sala al finalizar tu reunión.</span>
+                    <div class="ticker-group">
+                        <span class="ticker-item"><i class="fa-solid fa-circle-info"></i> Escanea el código QR de la puerta para reservar la sala.</span>
+                        <span class="ticker-item"><i class="fa-solid fa-building"></i> Empresas admitidas: Auropaq, Aurocredit, Auroseguros, Aurotech y Axertic.</span>
+                        <span class="ticker-item"><i class="fa-solid fa-leaf"></i> Por favor, apaga la pantalla y limpia la sala al finalizar tu reunión.</span>
+                    </div>
+                    <div class="ticker-group">
+                        <span class="ticker-item"><i class="fa-solid fa-circle-info"></i> Escanea el código QR de la puerta para reservar la sala.</span>
+                        <span class="ticker-item"><i class="fa-solid fa-building"></i> Empresas admitidas: Auropaq, Aurocredit, Auroseguros, Aurotech y Axertic.</span>
+                        <span class="ticker-item"><i class="fa-solid fa-leaf"></i> Por favor, apaga la pantalla y limpia la sala al finalizar tu reunión.</span>
+                    </div>
                 </div>
             </div>
         </footer>
