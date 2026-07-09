@@ -232,7 +232,7 @@ function updateTimeDependentStates(todayBookingsList) {
         // Sala de juntas libre
         roomStatusCard.classList.add('state-available');
         statusLabel.textContent = 'DISPONIBLE';
-        activeMeetingTitle.textContent = 'Libre para reuniones rápidas';
+        activeMeetingTitle.textContent = 'Libre para reuniones';
         activeMeetingCompany.textContent = 'SALA LIBRE';
         activeMeetingOrganizer.innerHTML = `<i class="fa-regular fa-user"></i> Sin organizador`;
 
@@ -270,4 +270,30 @@ function formatCountdown(totalSecs) {
     const mins = Math.floor((totalSecs % 3600) / 60);
     const secs = totalSecs % 60;
     return `${String(hrs).padStart(2, '0')}:${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+}
+
+/* ==========================================================================
+   FULLSCREEN LOGIC
+   ========================================================================== */
+const fullscreenBtn = document.getElementById('fullscreen-btn');
+if (fullscreenBtn) {
+    fullscreenBtn.addEventListener('click', () => {
+        if (!document.fullscreenElement) {
+            document.documentElement.requestFullscreen().catch(err => {
+                console.error('Error attempting to enable fullscreen:', err);
+            });
+        } else {
+            document.exitFullscreen();
+        }
+    });
+
+    document.addEventListener('fullscreenchange', () => {
+        if (document.fullscreenElement) {
+            fullscreenBtn.innerHTML = '<i class="fa-solid fa-compress"></i>';
+            fullscreenBtn.title = 'Salir de Pantalla Completa';
+        } else {
+            fullscreenBtn.innerHTML = '<i class="fa-solid fa-expand"></i>';
+            fullscreenBtn.title = 'Pantalla Completa';
+        }
+    });
 }

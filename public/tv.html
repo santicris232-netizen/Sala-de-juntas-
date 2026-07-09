@@ -51,7 +51,7 @@
                     </div>
                     
                     <div id="active-meeting-details" class="active-meeting-details">
-                        <h2 id="active-meeting-title">Libre para reuniones rápidas</h2>
+                        <h2 id="active-meeting-title">Libre para reuniones</h2>
                         <div class="meeting-meta-row">
                             <span id="active-meeting-company" class="company-tag">SALA LIBRE</span>
                             <span id="active-meeting-organizer" class="organizer-name"><i class="fa-regular fa-user"></i> Sin organizador</span>
@@ -134,7 +134,6 @@
         <!-- FOOTER / SCROLLING TAPE -->
         <footer class="tv-footer glass">
             <div class="ticker-wrapper">
-                <div class="ticker-title">INFORMACIÓN:</div>
                 <div class="ticker-content">
                     <span class="ticker-item"><i class="fa-solid fa-circle-info"></i> Escanea el código QR de la puerta para reservar la sala.</span>
                     <span class="ticker-item"><i class="fa-solid fa-building"></i> Empresas admitidas: Auropaq, Aurocredit, Auroseguros, Aurotech y Axertic.</span>
@@ -143,6 +142,10 @@
             </div>
         </footer>
     </div>
+    <!-- Floating Fullscreen Button -->
+    <button id="fullscreen-btn" title="Pantalla Completa" style="position: fixed; bottom: 24px; right: 24px; z-index: 1000; width: 48px; height: 48px; border-radius: 50%; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); color: var(--text-tv-muted); cursor: pointer; font-size: 1.2rem; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); opacity: 0.3; transition: all 0.3s ease;" onmouseover="this.style.opacity='1'; this.style.color='#fff'; this.style.background='rgba(255, 255, 255, 0.15)';" onmouseout="this.style.opacity='0.3'; this.style.color='var(--text-tv-muted)'; this.style.background='rgba(255, 255, 255, 0.05)';">
+        <i class="fa-solid fa-expand"></i>
+    </button>
 
     <!-- Scripts -->
     <script src="js/tv.js"></script>
