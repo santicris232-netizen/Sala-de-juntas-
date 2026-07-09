@@ -155,6 +155,9 @@ function renderSchedulerBlocks(todayBookings) {
 
         const block = document.createElement('div');
         block.classList.add('booking-block', b.company);
+        if (clampedDuration <= 35) {
+            block.classList.add('short-block');
+        }
         block.style.top = `${topPercent}%`;
         block.style.height = `${heightPercent}%`;
 
