@@ -24,6 +24,61 @@ async function writeBookings(env, bookings) {
     await env.BOOKINGS_KV.put("bookings", JSON.stringify(bookings));
 }
 
+// Enviar notificación por correo usando SendGrid (requiere variables de entorno SENDGRID_API_KEY, FROM_EMAIL y NOTIFY_EMAIL)
+async function sendNotificationEmail(env, booking) {
+    try {
+        const apiKey = env && env.SENDGRID_API_KEY;
+        const from = env && env.FROM_EMAIL;
+        const to = env && env.NOTIFY_EMAIL;
+
+        // DEBUG temporal: confirma qué variables está leyendo realmente el entorno.
+        // Puedes quitar este bloque una vez confirmes que todo funciona en producción.
+        console.log('DEBUG SendGrid vars:', {
+            apiKeyExists: !!apiKey,
+            apiKeyPrefix: apiKey ? apiKey.substring(0, 5) : 'NO EXISTE',
+            from: from || 'NO EXISTE',
+            to: to || 'NO EXISTE'
+        });
+
+        if (!apiKey || !from || !to) {
+            console.warn('SendGrid no está configurado. Omisión del envío de correo. Variables necesarias: SENDGRID_API_KEY, FROM_EMAIL, NOTIFY_EMAIL');
+            return;
+        }
+
+        const subject = `Nueva reserva: ${booking.title}`;
+        const text = `Se ha creado una nueva reserva.\n\nTítulo: ${booking.title}\nEmpresa: ${booking.company}\nOrganizador: ${booking.organizer}\nFecha: ${booking.date}\nHora inicio: ${booking.startTime}\nHora fin: ${booking.endTime}\nID: ${booking.id}\nCreada: ${booking.createdAt}`;
+
+        const body = {
+            personalizations: [
+                {
+                    to: [{ email: to }]
+                }
+            ],
+            from: { email: from },
+            subject: subject,
+            content: [
+                { type: 'text/plain', value: text }
+            ]
+        };
+
+        const resp = await fetch('https://api.sendgrid.com/v3/mail/send', {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${apiKey}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(body)
+        });
+
+        if (!resp.ok) {
+            const respText = await resp.text();
+            console.error('Error enviando correo via SendGrid:', resp.status, respText);
+        }
+    } catch (e) {
+        console.error('Error en sendNotificationEmail:', e);
+    }
+}
+
 // Handler para GET /api/bookings
 export async function onRequestGet(context) {
     try {
@@ -71,7 +126,7 @@ export async function onRequestPost(context) {
         const hasOverlap = dateBookings.some(b => {
             const existingStart = timeToMinutes(b.startTime);
             const existingEnd = timeToMinutes(b.endTime);
-            
+
             // Dos intervalos [s1, e1] y [s2, e2] se traslapan si s1 < e2 y e1 > s2
             return startMin < existingEnd && endMin > existingStart;
         });
@@ -97,6 +152,13 @@ export async function onRequestPost(context) {
 
         bookings.push(newBooking);
         await writeBookings(context.env, bookings);
+
+        // Intentar enviar notificación por correo (no bloqueante)
+        try {
+            await sendNotificationEmail(context.env, newBooking);
+        } catch (e) {
+            console.error('Fallo al enviar notificación por correo:', e);
+        }
 
         return new Response(JSON.stringify(newBooking), {
             status: 201,

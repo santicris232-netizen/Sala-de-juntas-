@@ -10,4 +10,5 @@ binding = "ASSETS"
 binding = "BOOKINGS_KV"
 # Reemplazar con el ID devuelto al crear el namespace con:
 # npx wrangler kv namespace create BOOKINGS_KV
-id = "CAMBIAR_POR_TU_KV_NAMESPACE_ID"
+id = "9c3618b7e50f4e128fe6c28d8f640c8b"
+preview_id = "90f9eb082acd405c953158f53679a6de"
