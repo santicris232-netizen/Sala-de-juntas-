@@ -1,0 +1,13 @@
+# Dependencias
+node_modules/
+
+# Variables de entorno
+.dev.vars
+.env
+.env.*
+
+# Cloudflare Wrangler
+.wrangler/
+
+# Logs
+*.log
