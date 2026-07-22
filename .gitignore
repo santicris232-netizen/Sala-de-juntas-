@@ -1,6 +1,10 @@
 # Dependencias
 node_modules/
 
+# IDE Visual Studio / VS Code
+.vs/
+.vscode/
+
 # Variables de entorno
 .dev.vars
 .env

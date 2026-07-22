@@ -1,59 +1,4 @@
-import { timeToMinutes, readBookings, writeBookings } from '../helpers.js';
-
-// Enviar notificación por correo usando SendGrid (requiere variables de entorno SENDGRID_API_KEY, FROM_EMAIL y NOTIFY_EMAIL)
-async function sendNotificationEmail(env, booking) {
-    try {
-        const apiKey = env && env.SENDGRID_API_KEY;
-        const from = env && env.FROM_EMAIL;
-        const to = env && env.NOTIFY_EMAIL;
-
-        // DEBUG temporal: confirma qué variables está leyendo realmente el entorno.
-        // Puedes quitar este bloque una vez confirmes que todo funciona en producción.
-        console.log('DEBUG SendGrid vars:', {
-            apiKeyExists: !!apiKey,
-            apiKeyPrefix: apiKey ? apiKey.substring(0, 5) : 'NO EXISTE',
-            from: from || 'NO EXISTE',
-            to: to || 'NO EXISTE'
-        });
-
-        if (!apiKey || !from || !to) {
-            console.warn('SendGrid no está configurado. Omisión del envío de correo. Variables necesarias: SENDGRID_API_KEY, FROM_EMAIL, NOTIFY_EMAIL');
-            return;
-        }
-
-        const subject = `${booking.organizer} ha agendado la sala de juntas`;
-        const text = `${booking.organizer} ha agendado la sala de juntas el ${booking.date} desde las ${booking.startTime} pm hasta las ${booking.endTime} pm.\n\nEmpresa: ${booking.company}\nID de reserva: ${booking.id}`;
-
-        const body = {
-            personalizations: [
-                {
-                    to: [{ email: to }]
-                }
-            ],
-            from: { email: from },
-            subject: subject,
-            content: [
-                { type: 'text/plain', value: text }
-            ]
-        };
-
-        const resp = await fetch('https://api.sendgrid.com/v3/mail/send', {
-            method: 'POST',
-            headers: {
-                'Authorization': `Bearer ${apiKey}`,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(body)
-        });
-
-        if (!resp.ok) {
-            const respText = await resp.text();
-            console.error('Error enviando correo via SendGrid:', resp.status, respText);
-        }
-    } catch (e) {
-        console.error('Error en sendNotificationEmail:', e);
-    }
-}
+import { timeToMinutes, readBookings, writeBookings, sendNotificationEmail } from '../helpers.js';
 
 // Handler para GET /api/bookings
 export async function onRequestGet(context) {
@@ -129,11 +74,11 @@ export async function onRequestPost(context) {
         bookings.push(newBooking);
         await writeBookings(context.env, bookings);
 
-        // Intentar enviar notificación por correo (no bloqueante)
-        try {
-            await sendNotificationEmail(context.env, newBooking);
-        } catch (e) {
-            console.error('Fallo al enviar notificación por correo:', e);
+        // Intentar enviar notificación por correo mediante ctx.waitUntil si está disponible
+        if (context.waitUntil) {
+            context.waitUntil(sendNotificationEmail(context.env, newBooking));
+        } else {
+            sendNotificationEmail(context.env, newBooking).catch(e => console.error('Fallo al enviar notificación por correo:', e));
         }
 
         return new Response(JSON.stringify(newBooking), {

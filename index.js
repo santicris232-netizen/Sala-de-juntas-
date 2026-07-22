@@ -1,4 +1,4 @@
-import { timeToMinutes, readBookings, writeBookings } from './functions/helpers.js';
+import { timeToMinutes, readBookings, writeBookings, sendNotificationEmail } from './functions/helpers.js';
 
 export default {
     async fetch(request, env, ctx) {
@@ -94,6 +94,13 @@ export default {
                 bookings.push(newBooking);
                 await writeBookings(env, bookings);
 
+                // Enviar notificación por correo
+                if (ctx && ctx.waitUntil) {
+                    ctx.waitUntil(sendNotificationEmail(env, newBooking));
+                } else {
+                    sendNotificationEmail(env, newBooking).catch(e => console.error('Fallo al enviar correo:', e));
+                }
+
                 return new Response(JSON.stringify(newBooking), {
                     status: 201,
                     headers: { 
@@ -163,7 +170,7 @@ export default {
             });
         }
 
-        // Fallback to serving static assets from directory
+        // Serve static assets
         if (env.ASSETS) {
             return env.ASSETS.fetch(request);
         }
