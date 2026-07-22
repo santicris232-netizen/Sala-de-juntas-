@@ -1,6 +1,0 @@
-# Plantilla de variables de entorno para desarrollo local (Wrangler / Cloudflare Workers)
-# Copia este archivo a .dev.vars y reemplaza los valores reales
-
-SENDGRID_API_KEY=SG.tu_api_key_de_sendgrid_aqui
-FROM_EMAIL=notificaciones@tuempresa.com
-NOTIFY_EMAIL=destino1@tuempresa.com, destino2@tuempresa.com
