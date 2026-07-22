@@ -1,3 +1,5 @@
+import { timeToMinutes, getTodayStr } from './utils.js';
+
 // State
 let bookings = [];
 const startHour = 7; // Grid starts at 07:00
@@ -191,7 +193,6 @@ function updateTimeDependentStates(todayBookingsList) {
     if (absoluteCurrentSeconds >= gridStartSeconds && absoluteCurrentSeconds <= gridEndSeconds) {
         currentTimeBar.style.display = 'block';
         const topPercent = ((absoluteCurrentSeconds - gridStartSeconds) / totalSeconds) * 100;
-        currentTimeBar.style.styleValue = topPercent;
         currentTimeBar.style.top = `${topPercent}%`;
     } else {
         currentTimeBar.style.display = 'none';
@@ -254,19 +255,6 @@ function updateTimeDependentStates(todayBookingsList) {
 /* ==========================================================================
    HELPERS & UTILS
    ========================================================================== */
-function getTodayStr() {
-    const now = new Date();
-    const y = now.getFullYear();
-    const m = String(now.getMonth() + 1).padStart(2, '0');
-    const d = String(now.getDate()).padStart(2, '0');
-    return `${y}-${m}-${d}`;
-}
-
-function timeToMinutes(timeStr) {
-    const [hours, minutes] = timeStr.split(':').map(Number);
-    return hours * 60 + minutes;
-}
-
 function formatCountdown(totalSecs) {
     if (totalSecs <= 0) return '00:00:00';
     const hrs = Math.floor(totalSecs / 3600);

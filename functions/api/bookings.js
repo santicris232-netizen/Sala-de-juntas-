@@ -1,28 +1,4 @@
-function timeToMinutes(timeStr) {
-    const [hours, minutes] = timeStr.split(':').map(Number);
-    return hours * 60 + minutes;
-}
-
-async function readBookings(env) {
-    if (!env || !env.BOOKINGS_KV) {
-        throw new Error("El namespace de KV 'BOOKINGS_KV' no está vinculado. Por favor, asegúrate de vincularlo en la configuración de Cloudflare Pages.");
-    }
-    const raw = await env.BOOKINGS_KV.get("bookings");
-    if (!raw) return [];
-    try {
-        return JSON.parse(raw);
-    } catch (e) {
-        console.error('Error parsing bookings from KV:', e);
-        return [];
-    }
-}
-
-async function writeBookings(env, bookings) {
-    if (!env || !env.BOOKINGS_KV) {
-        throw new Error("El namespace de KV 'BOOKINGS_KV' no está vinculado. Por favor, asegúrate de vincularlo en la configuración de Cloudflare Pages.");
-    }
-    await env.BOOKINGS_KV.put("bookings", JSON.stringify(bookings));
-}
+import { timeToMinutes, readBookings, writeBookings } from '../helpers.js';
 
 // Enviar notificación por correo usando SendGrid (requiere variables de entorno SENDGRID_API_KEY, FROM_EMAIL y NOTIFY_EMAIL)
 async function sendNotificationEmail(env, booking) {
@@ -45,8 +21,8 @@ async function sendNotificationEmail(env, booking) {
             return;
         }
 
-        const subject = `Nueva reserva: ${booking.title}`;
-        const text = `Se ha creado una nueva reserva.\n\nTítulo: ${booking.title}\nEmpresa: ${booking.company}\nOrganizador: ${booking.organizer}\nFecha: ${booking.date}\nHora inicio: ${booking.startTime}\nHora fin: ${booking.endTime}\nID: ${booking.id}\nCreada: ${booking.createdAt}`;
+        const subject = `${booking.organizer} ha agendado la sala de juntas`;
+        const text = `${booking.organizer} ha agendado la sala de juntas el ${booking.date} desde las ${booking.startTime} pm hasta las ${booking.endTime} pm.\n\nEmpresa: ${booking.company}\nID de reserva: ${booking.id}`;
 
         const body = {
             personalizations: [

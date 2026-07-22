@@ -43,11 +43,7 @@ function writeBookings(bookings) {
     }
 }
 
-// Helper to parse time string (HH:MM) to minutes since midnight for comparison
-function timeToMinutes(timeStr) {
-    const [hours, minutes] = timeStr.split(':').map(Number);
-    return hours * 60 + minutes;
-}
+const { timeToMinutes } = require('./server-utils.js');
 
 // Endpoints
 app.get('/api/bookings', (req, res) => {

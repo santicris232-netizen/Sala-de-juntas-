@@ -1,28 +1,4 @@
-function timeToMinutes(timeStr) {
-    const [hours, minutes] = timeStr.split(':').map(Number);
-    return hours * 60 + minutes;
-}
-
-async function readBookings(env) {
-    if (!env || !env.BOOKINGS_KV) {
-        throw new Error("El namespace de KV 'BOOKINGS_KV' no está vinculado. Por favor, asegúrate de vincularlo en tu configuración de Cloudflare.");
-    }
-    const raw = await env.BOOKINGS_KV.get("bookings");
-    if (!raw) return [];
-    try {
-        return JSON.parse(raw);
-    } catch (e) {
-        console.error('Error parsing bookings from KV:', e);
-        return [];
-    }
-}
-
-async function writeBookings(env, bookings) {
-    if (!env || !env.BOOKINGS_KV) {
-        throw new Error("El namespace de KV 'BOOKINGS_KV' no está vinculado. Por favor, asegúrate de vincularlo en tu configuración de Cloudflare.");
-    }
-    await env.BOOKINGS_KV.put("bookings", JSON.stringify(bookings));
-}
+import { timeToMinutes, readBookings, writeBookings } from './functions/helpers.js';
 
 export default {
     async fetch(request, env, ctx) {

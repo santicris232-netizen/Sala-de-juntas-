@@ -1,3 +1,5 @@
+import { formatDate } from './utils.js';
+
 // State Variables
 let currentUser = null;
 let selectedCompany = null;
@@ -424,13 +426,6 @@ function renderUpcoming() {
 /* ==========================================================================
    HELPERS & UTILS
    ========================================================================== */
-function formatDate(date) {
-    const y = date.getFullYear();
-    const m = String(date.getMonth() + 1).padStart(2, '0');
-    const d = String(date.getDate()).padStart(2, '0');
-    return `${y}-${m}-${d}`;
-}
-
 function setDefaultTimes() {
     const now = new Date();
     // Round to next 15-minute mark for start time
